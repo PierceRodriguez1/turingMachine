@@ -15,8 +15,8 @@ public class TMSimulator {
             System.exit(1);
         }
 
-        FileReader file = new FileReader(args[0]);
-        BufferedReader buff = new BufferedReader(file);
+        BufferedReader buff = new BufferedReader(new FileReader(args[0]));
+
 
         states = Integer.parseInt(buff.readLine()); //first line, number of states
         alph = Integer.parseInt(buff.readLine()); //second line, alphabet starting from 1
@@ -32,7 +32,6 @@ public class TMSimulator {
         tm.createTape(buff.readLine());
 
         buff.close();
-        file.close();
 
         tm.simulate();
         int sum = 0;
