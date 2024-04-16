@@ -6,30 +6,53 @@ import java.io.IOException;
 
 public class TMSimulator {
 
-    static int states;             //Other classes will need this information
-    static int alph;
+    private static int states;
+    private static int alph;
 
-    public static void main (String[] args) throws IOException {
-        if (args.length != 1){ //must be a file that is passed via command line
-            System.out.println("Must be Input file via command line!");
-            System.exit(1);
+    public static void main(String[] args) {
+        try {
+            if (args.length != 1) {
+                System.out.println("Usage: java TMSimulator <inputFilePath>");
+                System.exit(1);
+            }
+
+            String filePath = args[0];
+            initializeSimulation(filePath);
+        } catch (Exception e) {
+            System.out.println("Error during simulation: " + e.getMessage());
+            e.printStackTrace();
         }
-        BufferedReader buff = new BufferedReader(new FileReader(args[0]));
+    }
 
-        states = Integer.parseInt(buff.readLine()); //first line, number of states
-        alph = Integer.parseInt(buff.readLine()); //second line, alphabet starting from 1
+    private static void initializeSimulation(String filePath) throws IOException {
+        try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                // Parse the line to extract states and alphabets
+                // For simplicity, assuming the first line contains states and the second contains alphabets
+                if (states == 0) {
+                    states = Integer.parseInt(line);
+                    continue;
+                }
+                if (alph == 0) {
+                    alph = Integer.parseInt(line);
+                    break;
+                }
+            }
 
-        TM tm = new TM(states, alph); //creates a new turing machine passing in states and "alphabet"
-
-        for (int i = 0; i < states - 1; i++){ //states(4) - 1 = {0, 1, 2, 3}
+            // Setup TM machine with parsed values
+            TM tm = new TM(states, alph);
+            // Assuming there would be further setup and running of the TM based on additional file contents
+            // For example, loading states transitions and tape contents
+            for (int i = 0; i < states - 1; i++){ //states(4) - 1 = {0, 1, 2, 3}
             for (int j = 0; j <= alph; j++){ //alph(1) = {0, 1} alphabet
-                tm.addTransition(i, j, buff.readLine());
+                tm.addTransition(i, j, reader.readLine());
             }
         }
 
-        tm.createTape(buff.readLine());
+        tm.createTape(reader.readLine());
 
-        buff.close();
+        reader.close();
 
         tm.simulate();
         int sum = 0;
@@ -44,5 +67,6 @@ public class TMSimulator {
         System.out.println("Output: " + output);
         System.out.println("Output Length: " + tm.tape.size());
         System.out.println("Sum of Symbols: " + sum);
+        }
     }
 }
