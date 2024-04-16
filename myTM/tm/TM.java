@@ -23,7 +23,6 @@ public class TM {
 
     public TM(int states, int alph){
         numStates = states;
-        //tmState = new TMState(numStates);
         state = new TMState[numStates];
 
         for (int i = 0; i < numStates; i++){

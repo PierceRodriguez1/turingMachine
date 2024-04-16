@@ -11,13 +11,6 @@ public class TMTape {
         head = 0;
     }
 
-//    public void initialize(String input) {
-//        for (int i = 0; i < input.length(); i++) {
-//            int symbol = Integer.parseInt(input.substring(i, i + 1));
-//            tape.add(symbol);
-//        }
-//    }
-
     public int read() {
         return tape.get(head);
     }

@@ -14,9 +14,7 @@ public class TMSimulator {
             System.out.println("Must be Input file via command line!");
             System.exit(1);
         }
-
         BufferedReader buff = new BufferedReader(new FileReader(args[0]));
-
 
         states = Integer.parseInt(buff.readLine()); //first line, number of states
         alph = Integer.parseInt(buff.readLine()); //second line, alphabet starting from 1
