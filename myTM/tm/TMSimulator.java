@@ -42,8 +42,6 @@ public class TMSimulator {
 
             // Setup TM machine with parsed values
             TM tm = new TM(states, alph);
-            // Assuming there would be further setup and running of the TM based on additional file contents
-            // For example, loading states transitions and tape contents
             for (int i = 0; i < states - 1; i++){ //states(4) - 1 = {0, 1, 2, 3}
             for (int j = 0; j <= alph; j++){ //alph(1) = {0, 1} alphabet
                 tm.addTransition(i, j, reader.readLine());
