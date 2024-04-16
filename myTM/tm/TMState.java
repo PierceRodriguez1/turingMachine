@@ -1,6 +1,5 @@
 package tm;
-import java.util.HashMap;
-import java.util.Map;
+
 
 public class TMState {
     private int stateNumber;
