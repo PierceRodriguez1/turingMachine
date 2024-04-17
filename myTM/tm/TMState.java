@@ -1,4 +1,5 @@
 package tm;
+
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -11,7 +12,6 @@ public class TMState {
     protected ArrayList<Integer> headWrite; // List of values to write on the tape head
     private final ArrayList<Integer> stateTrans; // List of next states
     private final ArrayList<Character> transDirections; // List of movement directions for the tape head
-
     /**
      * Constructor to initialize a TMState.
      * @param id The ID of the state.
@@ -88,13 +88,13 @@ private void ensureCapacity(int index) {
     // Check if the index is greater than or equal to the current size of the lists
     if (index >= stateTrans.size()) {
         // Increase the capacity of the stateTrans, headwrite, and transDirections list to accommodate the index
-        stateTrans.ensureCapacity(index + 1);       
-        headWrite.ensureCapacity(index + 1);       
-        transDirections.ensureCapacity(index + 1);      
+        stateTrans.ensureCapacity(index + 1);
+        headWrite.ensureCapacity(index + 1);
+        transDirections.ensureCapacity(index + 1);
         // Fill the lists with null values from the current size to the desired index
         for (int i = stateTrans.size(); i <= index; i++) {
-            stateTrans.add(null);           
-            headWrite.add(null);           
+            stateTrans.add(null);
+            headWrite.add(null);
             transDirections.add(null);
         }
     }
