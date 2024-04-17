@@ -1,104 +1,81 @@
 package tm;
 
-import java.util.LinkedList;
-
-
+import java.util.ArrayList;
+import java.util.List;
+//comment code and this class should be good. add good javadocs and inline
 public class TM {
-    private int numStates;
-    private int to;
-    private int write;
-    private TMState tmState;
-
-    private boolean done = false;
-
-    LinkedList tape = new LinkedList<>();
-
-    int head = 0;
-
-    int current = head;
-    int tapeIndex = 0;
-
-    private int id = 0;
-    private TMState state[];
+    protected final List<Integer> actualTape = new ArrayList<>();
+    private final List<TMState> currState;
+    private final int numStates;
+    private int currPos = 0;
+    private int tapeIndex = 0;
+    private boolean finished = false;
 
     public TM(int states, int alph) {
         numStates = states;
-        state = new TMState[numStates];
+        currState = new ArrayList<>(numStates);
 
         for (int i = 0; i < numStates; i++) {
-            state[i] = new TMState(i, alph);
+            currState.add(new TMState(i, alph));
         }
     }
-
 
     public void addTransition(int from, int on, String str) {
-        String[] split = str.split(","); //split the string into segments
-        to = Integer.parseInt(split[0]); //state to
-        write = Integer.parseInt(split[1]); //write on state
-        char move = split[2].charAt(0); //direction
-        state[from].addTransitions(on, to, write, move);
-
-        id++;
+        String[] split = str.split(",");
+        int to = Integer.parseInt(split[0]);
+        int write = Integer.parseInt(split[1]);
+        char move = split[2].charAt(0);
+        currState.get(from).addTransitions(on, to, write, move);
     }
 
-    public void createTape(String readLine) {
+    public void makeTape(String readLine) {
         if (readLine != null && !readLine.isEmpty()) {
-            for (int i = 0; i < readLine.length(); i++) {
-                tape.add(Integer.parseInt(readLine.substring(i, i + 1)));
+            readLine.chars().map(Character::getNumericValue).forEach(actualTape::add);
+        }
+        System.out.println(actualTape);
+    }
+
+    public void sim() {
+        if (actualTape.isEmpty()) {
+            actualTape.add(0);
+        }
+
+        while (!finished && currPos != -1) {
+            processTransition();
+
+            if (currPos == numStates - 1) {
+                finished = true;
+                System.out.println("Machine terminated at currState " + currPos);
             }
         }
-        System.out.println(tape);
+        System.out.println("Final Tape Content: " + actualTape);
     }
 
-    public void simulate() {
-        while (!done) {
-            if (tape.isEmpty() || tapeIndex < 0) {
-                if (tapeIndex == -1) {
-                    tape.push(0);
-                    tapeIndex++;
-                } else {
-                    tape.add(tapeIndex, 0);
-                }
-            } else {
-                Object input = read(tapeIndex);
-                // tape.remove(input);
-                tape.remove(tapeIndex);
-                if (tapeIndex == tape.size()) {
-                    tape.add(state[current].getWriteValue(Integer.parseInt(input.toString())));
-                } else {
-                    write(tapeIndex, state[current].getWriteValue(Integer.parseInt(input.toString())));
-                }
-                if ((char) state[current].getDirection(Integer.parseInt(input.toString())) == 'L') {
-                    //System.out.println("LEFT");
-                    current = state[current].getTransition(Integer.parseInt(input.toString()));
-                    // System.out.println("Current: " + current);
-                    tapeIndex--;
-                    //System.out.println("Tape Index: " + tapeIndex);
-                } else if ((char) state[current].getDirection(Integer.parseInt(input.toString())) == 'R') {
-                    // System.out.println("RIGHT");
-                    current = state[current].getTransition(Integer.parseInt(input.toString()));
-                    //System.out.println("Current: " + current);
-                    tapeIndex++;
-                    //System.out.println("Tape Index: " + tapeIndex);
-                    if (tapeIndex == tape.size()) {
-                        tape.addLast(0);
-                    }
-                }
+    private void processTransition() {
+        int input = actualTape.get(tapeIndex);
+        int writeValue = currState.get(currPos).getWrValue(input);
+        char direction = currState.get(currPos).getDirection(input);
+        int nextState = currState.get(currPos).getTrans(input);
+
+        actualTape.set(tapeIndex, writeValue);
+
+        currPos = nextState;
+        moveTape(direction);
+    }
+
+    private void moveTape(char direction) {
+        if (direction == 'L') {
+            tapeIndex--;
+            if (tapeIndex < 0) {
+                actualTape.add(0, 0);
+                tapeIndex = 0;
             }
-            if (current == numStates - 1) {
-                done = true;
-                System.out.println(current);
+        } else if (direction == 'R') {
+            tapeIndex++;
+            if (tapeIndex >= actualTape.size()) {
+                actualTape.add(0);
             }
-            System.out.println(tape);
         }
     }
-
-    public Object read(int data) {
-        return tape.get(data);
-    }
-
-    public void write(int index, int data) {
-        tape.add(index, data);
-    }
-
 }
+
