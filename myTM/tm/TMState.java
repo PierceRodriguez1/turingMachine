@@ -1,42 +1,53 @@
 package tm;
 
+import java.util.ArrayList;
+import java.util.Collections;
 
 public class TMState {
-    private int stateNumber;
-    int id;
-
-    private int[] transition;
-    private char[] directions;
-
-    private int[] write;
+    protected int id;
+    protected ArrayList<Integer> writes;
+    private final ArrayList<Integer> transitions;
+    private final ArrayList<Character> directions;
 
     public TMState(int id, int length) {
         this.id = id;
-        transition = new int[length + 1];
-        directions = new char[length + 1];
-        write = new int[length + 1];
+        this.transitions = new ArrayList<>(Collections.nCopies(length + 1, null));
+        this.directions = new ArrayList<>(Collections.nCopies(length + 1, null));
+        this.writes = new ArrayList<>(Collections.nCopies(length + 1, null));
     }
 
-    public int getTransition(int stateIndex){
-        return transition[stateIndex];
+    public Object getDirection(int input) {
+        return directions.get(input);
     }
 
-    public char getDirection(int index) {
-        return directions[index];
+    public void addTransitions(int on, int to, int write, char move) {
+        // Ensure the lists are large enough
+        ensureCapacity(on);
+
+        transitions.set(on, to);
+        writes.set(on, write);
+        directions.set(on, move);
     }
 
-    public int getWriteValue(int index) {
-        int value = write[index];
-        return value;
+    public int getWriteValue(int i) {
+        return writes.get(i);
     }
 
-    public int getStateNumber() {
-        return stateNumber;
+    public int getTransition(int i) {
+        return transitions.get(i);
     }
 
-    public void addTransitions(int on, int to, int data, char direction) {
-        transition[on] = to;
-        write[on] = data;
-        directions[on] = direction;
+    private void ensureCapacity(int index) {
+        if (index >= transitions.size()) {
+            transitions.ensureCapacity(index + 1);
+            writes.ensureCapacity(index + 1);
+            directions.ensureCapacity(index + 1);
+
+            for (int i = transitions.size(); i <= index; i++) {
+                transitions.add(null);
+                writes.add(null);
+                directions.add(null);
+            }
+        }
     }
 }

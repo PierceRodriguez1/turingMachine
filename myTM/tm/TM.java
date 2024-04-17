@@ -21,31 +21,29 @@ public class TM {
     private int id = 0;
     private TMState state[];
 
-    public TM(int states, int alph){
+    public TM(int states, int alph) {
         numStates = states;
         state = new TMState[numStates];
 
-        for (int i = 0; i < numStates; i++){
+        for (int i = 0; i < numStates; i++) {
             state[i] = new TMState(i, alph);
         }
-        //create new tape
-        //create new states
     }
 
 
-    public void addTransition(int from, int on, String str){
+    public void addTransition(int from, int on, String str) {
         String[] split = str.split(","); //split the string into segments
         to = Integer.parseInt(split[0]); //state to
         write = Integer.parseInt(split[1]); //write on state
         char move = split[2].charAt(0); //direction
-        state[from].addTransitions(on,to,write,move);
+        state[from].addTransitions(on, to, write, move);
 
         id++;
     }
 
     public void createTape(String readLine) {
-        if (readLine != null && readLine.length() > 0){
-            for (int i = 0; i < readLine.length(); i++){
+        if (readLine != null && !readLine.isEmpty()) {
+            for (int i = 0; i < readLine.length(); i++) {
                 tape.add(Integer.parseInt(readLine.substring(i, i + 1)));
             }
         }
@@ -53,9 +51,9 @@ public class TM {
     }
 
     public void simulate() {
-        while (!done){
-            if (tape.size() == 0 || tapeIndex < 0){
-                if (tapeIndex == -1){
+        while (!done) {
+            if (tape.isEmpty() || tapeIndex < 0) {
+                if (tapeIndex == -1) {
                     tape.push(0);
                     tapeIndex++;
                 } else {
@@ -63,31 +61,31 @@ public class TM {
                 }
             } else {
                 Object input = read(tapeIndex);
-               // tape.remove(input);
+                // tape.remove(input);
                 tape.remove(tapeIndex);
-                if (tapeIndex == tape.size()){
+                if (tapeIndex == tape.size()) {
                     tape.add(state[current].getWriteValue(Integer.parseInt(input.toString())));
                 } else {
                     write(tapeIndex, state[current].getWriteValue(Integer.parseInt(input.toString())));
                 }
-                if (state[current].getDirection(Integer.parseInt(input.toString())) == 'L') {
+                if ((char) state[current].getDirection(Integer.parseInt(input.toString())) == 'L') {
                     //System.out.println("LEFT");
                     current = state[current].getTransition(Integer.parseInt(input.toString()));
-                   // System.out.println("Current: " + current);
+                    // System.out.println("Current: " + current);
                     tapeIndex--;
                     //System.out.println("Tape Index: " + tapeIndex);
-                } else if (state[current].getDirection(Integer.parseInt(input.toString())) == 'R'){
-                   // System.out.println("RIGHT");
+                } else if ((char) state[current].getDirection(Integer.parseInt(input.toString())) == 'R') {
+                    // System.out.println("RIGHT");
                     current = state[current].getTransition(Integer.parseInt(input.toString()));
                     //System.out.println("Current: " + current);
                     tapeIndex++;
                     //System.out.println("Tape Index: " + tapeIndex);
-                    if (tapeIndex == tape.size()){
+                    if (tapeIndex == tape.size()) {
                         tape.addLast(0);
                     }
                 }
             }
-            if (current == numStates - 1){
+            if (current == numStates - 1) {
                 done = true;
                 System.out.println(current);
             }
@@ -95,11 +93,11 @@ public class TM {
         }
     }
 
-    public Object read(int data){
+    public Object read(int data) {
         return tape.get(data);
     }
 
-    public void write (int index, int data){
+    public void write(int index, int data) {
         tape.add(index, data);
     }
 

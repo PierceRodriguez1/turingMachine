@@ -42,29 +42,29 @@ public class TMSimulator {
 
             // Setup TM machine with parsed values
             TM tm = new TM(states, alph);
-            for (int i = 0; i < states - 1; i++){ //states(4) - 1 = {0, 1, 2, 3}
-            for (int j = 0; j <= alph; j++){ //alph(1) = {0, 1} alphabet
-                tm.addTransition(i, j, reader.readLine());
+            for (int i = 0; i < states - 1; i++) { //states(4) - 1 = {0, 1, 2, 3}
+                for (int j = 0; j <= alph; j++) { //alph(1) = {0, 1} alphabet
+                    tm.addTransition(i, j, reader.readLine());
+                }
             }
-        }
 
-        tm.createTape(reader.readLine());
+            tm.createTape(reader.readLine());
 
-        reader.close();
+            reader.close();
 
-        tm.simulate();
-        int sum = 0;
-        int i = 0;
-        String output = "";
+            tm.simulate();
+            int sum = 0;
+            int i = 0;
+            String output = "";
 
-        while(i < tm.tape.size()){
-            output += tm.tape.get(i);
-            sum += Integer.parseInt(tm.tape.get(i).toString());
-            i++;
-        }
-        System.out.println("Output: " + output);
-        System.out.println("Output Length: " + tm.tape.size());
-        System.out.println("Sum of Symbols: " + sum);
+            while (i < tm.tape.size()) {
+                output += tm.tape.get(i);
+                sum += Integer.parseInt(tm.tape.get(i).toString());
+                i++;
+            }
+            System.out.println("Output: " + output);
+            System.out.println("Output Length: " + tm.tape.size());
+            System.out.println("Sum of Symbols: " + sum);
         }
     }
 }
