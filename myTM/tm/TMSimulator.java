@@ -1,16 +1,23 @@
 package tm;
-
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-//comment code and this class should be good. add good javadocs and inline
+
+/**
+ * TMSimulator class represents a Turing Machine simulator.
+ * @author Pierce Rodriguez and Nolan Stetz
+ */
 public class TMSimulator {
+    private static int states; // states in the Turing Machine
+    private static int alph; // alphabet in the Turing Machine
 
-    private static int states;
-    private static int alph;
-
+    /**
+     * Main method to execute the Turing Machine simulation.
+     * @param args Command-line arguments. Expects the path to the input file containing the Turing Machine configuration.
+     */
     public static void main(String[] args) {
         try {
+            // Check if the correct number of arguments is provided
             if (args.length != 1) {
                 System.out.println("Usage: java TMSimulator <inputFilePath>");
                 System.exit(1);
@@ -24,12 +31,17 @@ public class TMSimulator {
         }
     }
 
+    /**
+     * Initializes the simulation with the given input file.
+     * @param filePath Path to the input file containing the Turing Machine configuration.
+     * @throws IOException If an I/O error occurs while reading the input file.
+     */
     private static void initializeSimulation(String filePath) throws IOException {
         try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
             String line;
             while ((line = reader.readLine()) != null) {
                 // Parse the line to extract states and alphabets
-                // For simplicity, assuming the first line contains states and the second contains alphabets
+                // the first line contains states and the second contains alphabets
                 if (states == 0) {
                     states = Integer.parseInt(line);
                     continue;
@@ -42,17 +54,25 @@ public class TMSimulator {
 
             // Setup TM machine with parsed values
             TM machine = new TM(states, alph);
-            for (int i = 0; i < states - 1; i++) { //states(4) - 1 = {0, 1, 2, 3}
-                for (int j = 0; j <= alph; j++) { //alph(1) = {0, 1} alphabet
+
+            // Read transitions for each state and alphabet
+            for (int i = 0; i < states - 1; i++) {
+                //states(4) - 1 = {0, 1, 2, 3}
+                for (int j = 0; j <= alph; j++) {
+                    //alph(1) = {0, 1} alphabet
                     machine.addTransition(i, j, reader.readLine());
                 }
             }
 
+            // Set the initial tape configuration
             machine.makeTape(reader.readLine());
 
             reader.close();
 
+            // Run the simulation
             machine.sim();
+
+            // Print the output
             int sum = 0;
             int i = 0;
             String output = "";
