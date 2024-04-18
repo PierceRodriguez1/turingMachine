@@ -61,9 +61,7 @@ public class TMSimulator {
 
             // Read transitions for each state and alphabet
             for (int i = 0; i < states - 1; i++) {
-                //states(4) - 1 = {0, 1, 2, 3}
                 for (int j = 0; j <= alph; j++) {
-                    //alph(1) = {0, 1} alphabet
                     machine.addTransition(i, j, reader.readLine());
                 }
             }
