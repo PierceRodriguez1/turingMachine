@@ -14,7 +14,7 @@ This project was more difficult than the first but not as tough as the second on
 part of this project was figuring out the layout of the files since they had been given in the previous so we 
 tried to base our project layout off those and keep them similar. This helped improve our agile development that
 has been getting preached in mutiple classes. We had to consider the classes and how they interacted together. 
-Especially since we tried to keep using a Hashmap originally like the previous projects but in developement 
+Especially since we tried to keep using a LinkedList originally like the previous projects but in developement 
 decided to change to an ArrayList to make the turing machine run faster.
 
 We had a couple print statements in our actual simulation that we had printing through each iteration to see
@@ -23,7 +23,7 @@ of each iteration. Trying to optimize our program we actually removed those and 
 immensely and we could see file5.txt finishing in seconds instead of watching it continually print out results
 through each iteration running what felt like endlessly. This project was a good project to practice our Agile Development
 that has been continually preached to use in Software Enginneering and a good practice to help choose a proper 
-data structure for the project at hand because sticking with the Hashmap would have made our project run
+data structure for the project at hand because sticking with the LinnkedList would have made our project run
 immensely longer. 
 
 
