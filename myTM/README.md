@@ -37,7 +37,7 @@ Starting from the parent directory for tm
 * cd tm
 * javac *.java
 * cd ../
-* java tm.TMSimulator <./file0.txt || ./file2.txt || ./file5.txt>
+* java tm.TMSimulator <./fileX.txt>
 
 ## Sources Used ##
 
