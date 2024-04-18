@@ -26,7 +26,7 @@ of each iteration. Trying to optimize our program we actually removed those and 
 immensely, and we could see file5.txt finishing in seconds instead of watching it continually print out results
 through each iteration running what felt like endlessly. This project was a good project to practice our Agile Development
 that has been continually preached to use in Software Engineering and a good practice to help choose a proper 
-data structure for the project at hand because sticking with the Hashmap would have made our project run
+data structure for the project at hand because sticking with the LinkedList would have made our project run
 immensely longer. 
 
 
