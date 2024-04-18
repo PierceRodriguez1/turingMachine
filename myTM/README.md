@@ -41,4 +41,10 @@ Starting from the parent directory for tm
 
 ## Sources Used ##
 
-No sources were used
+Like the two previous projects, the choice in data structure is huge in the performance and ability to keep our code 
+concise with the same functionality. In previous projects a linked data structure was much nicer but for performance purposes
+we needed to look at time complexity for the competition, so we used this Geeks for Geeks site to do that. This allowed us to touch
+up on our previous knowledge gained in 321 and an ArrayList, since the size of our lists most likely won't change once we read in the
+file seemed to suite this project very well. We used ArrayLists for everything and it especially made our tape much easier to handle. 
+
+https://www.geeksforgeeks.org/common-operations-on-various-data-structures/?ref=lbp
