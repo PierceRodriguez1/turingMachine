@@ -1,9 +1,11 @@
 package tm;
+
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * TM class represents a Turing Machine.
+ *
  * @author Pierce Rodriguez and Nolan Stetz
  */
 public class TM {
@@ -16,8 +18,9 @@ public class TM {
 
     /**
      * Constructor to initialize a Turing Machine with the given number of states and alphabet size.
+     *
      * @param states Number of states in the Turing Machine.
-     * @param alph Alphabet size.
+     * @param alph   Alphabet size.
      */
     public TM(int states, int alph) {
         numStates = states;
@@ -30,9 +33,10 @@ public class TM {
 
     /**
      * Adds a transition to the current state.
+     *
      * @param from Starting state.
-     * @param on Input symbol index.
-     * @param str String representing the transition (toState, writeValue, direction).
+     * @param on   Input symbol index.
+     * @param str  String representing the transition (toState, writeValue, direction).
      */
     public void addTransition(int from, int on, String str) {
         String[] split = str.split(",");
@@ -44,6 +48,7 @@ public class TM {
 
     /**
      * Initializes the tape with the given input string.
+     *
      * @param readLine Input string representing the initial tape content.
      */
     public void makeTape(String readLine) {
@@ -86,6 +91,7 @@ public class TM {
 
     /**
      * Moves the tape head based on the given direction.
+     *
      * @param direction The direction to move the tape head ('L' for left, 'R' for right).
      */
     private void moveTape(char direction) {

@@ -1,10 +1,12 @@
 package tm;
+
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 
 /**
  * TMSimulator class represents a Turing Machine simulator.
+ *
  * @author Pierce Rodriguez and Nolan Stetz
  */
 public class TMSimulator {
@@ -13,6 +15,7 @@ public class TMSimulator {
 
     /**
      * Main method to execute the Turing Machine simulation.
+     *
      * @param args Command-line arguments. Expects the path to the input file containing the Turing Machine configuration.
      */
     public static void main(String[] args) {
@@ -33,6 +36,7 @@ public class TMSimulator {
 
     /**
      * Initializes the simulation with the given input file.
+     *
      * @param filePath Path to the input file containing the Turing Machine configuration.
      * @throws IOException If an I/O error occurs while reading the input file.
      */
